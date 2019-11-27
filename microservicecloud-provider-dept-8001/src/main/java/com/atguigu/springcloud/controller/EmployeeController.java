@@ -22,8 +22,7 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    private @ResponseBody
-    SoftworksResponse<Boolean> save(@RequestBody Employee employee){
+    private @ResponseBody SoftworksResponse<Boolean> save(@RequestBody Employee employee){
         log.info("保存新增用户");
         Boolean result = employeeService.addEmployeeService(employee);
         if(result)
@@ -31,6 +30,7 @@ public class EmployeeController {
         return SoftworksResponse.failure(MessageCode.COMMON_FAILURE);
     }
 
+    //测试成功---------------------》》》http://localhost:8001/employee/?code=string13
     @GetMapping(value="/", produces = MediaType.APPLICATION_JSON_VALUE)
     private @ResponseBody SoftworksResponse<Employee> detail(@RequestParam(value = "code") String code){
         log.info("获取业务评价详细信息 id = " + code);
@@ -40,6 +40,7 @@ public class EmployeeController {
         return SoftworksResponse.failure(MessageCode.COMMON_USER_NOT_EXIST);
     }
 
+    //测试成功---------------------》》》http://localhost:8001/employee/page_list
     @GetMapping(value = "page_list", produces = MediaType.APPLICATION_JSON_VALUE)
     private @ResponseBody SoftworksResponse<PageInfo> page(
             @RequestParam(value = "pageNum", required = false) Integer pageNum,
@@ -65,8 +66,8 @@ public class EmployeeController {
         return SoftworksResponse.success(result);
     }
 
-
-    @GetMapping(value = "page_list1111111111111111")
+    //测试成功---------------------》》》http://localhost:8001/employee/list
+    @GetMapping(value = "list")
     private @ResponseBody SoftworksResponse<List<Employee>> page() {
         log.info("根据条件获取业务事项分页列表");
         List<Employee> emps = employeeService.findAllService();

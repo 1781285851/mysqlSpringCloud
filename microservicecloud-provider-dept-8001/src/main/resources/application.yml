@@ -1,5 +1,5 @@
 server:
-  port: 3001
+  port: 8001
 
 mybatis:
   config-location: classpath:mybatis/mybatis.cfg.xml  #mybatis所在路径
@@ -37,5 +37,9 @@ info:
   build.version: $project.version$
 
 
-
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
 

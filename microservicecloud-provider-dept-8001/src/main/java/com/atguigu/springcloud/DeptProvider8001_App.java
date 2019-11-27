@@ -1,8 +1,10 @@
 package com.atguigu.springcloud;
 
+import com.github.pagehelper.PageInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EnableEurekaClient //本服务启动后会自动注册进eureka服务中
@@ -12,6 +14,8 @@ public class DeptProvider8001_App
     {
         SpringApplication.run(DeptProvider8001_App.class, args);
     }
+
+
 }
 
 

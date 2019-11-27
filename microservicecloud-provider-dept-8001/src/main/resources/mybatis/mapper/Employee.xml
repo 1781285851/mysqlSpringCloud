@@ -4,11 +4,11 @@
 
 
     <select id="findByName" resultType="Employee" parameterType="String">
-   select id,code,qname,gender,password,phone,description,auth,status from EMPLOYEE where status = 1 and code = #{code}
+   select * from EMPLOYEE where status = 1 and code = #{code}
   </select>
 
     <select id="findAll" resultType="Employee">
-   select id,code,qname,gender,password,phone,description,auth,status from EMPLOYEE where status = 1;
+   select * from EMPLOYEE where status = 1
   </select>
 
     <insert id="addEmployee" parameterType="Employee">
