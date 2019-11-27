@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.springcloud.dao.WorksDao">
+
+    <select id="findByDate" resultType="Works" parameterType="String">
+        SELECT * FROM works WHERE createDate BETWEEN #{start} AND #{end}
+    </select>
+
+    <select id="findAll" resultType="Works">
+        SELECT * FROM works
+    </select>
+
+    <insert id="addWorks" parameterType="Works">
+        INSERT INTO works(createDate,workContent,empId) VALUES(#{createDate},#{workContent},#{empId})
+    </insert>
+
+
+</mapper>
