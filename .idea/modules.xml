@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/microservicecloud-eureka-7002/microservicecloudeureka7002.iml" filepath="$PROJECT_DIR$/microservicecloud-eureka-7002/microservicecloudeureka7002.iml" />
+      <module fileurl="file://$PROJECT_DIR$/microservicecloud-eureka-7003/microservicecloudeureka7003.iml" filepath="$PROJECT_DIR$/microservicecloud-eureka-7003/microservicecloudeureka7003.iml" />
+    </modules>
+  </component>
+</project>

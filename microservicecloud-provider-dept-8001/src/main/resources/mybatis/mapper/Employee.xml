@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.springcloud.dao.EmployeeDao">
+
+
+    <select id="findByName" resultType="Employee" parameterType="String">
+   select id,code,qname,gender,password,phone,description,auth,status from EMPLOYEE where status = 1 and code = #{code}
+  </select>
+
+    <select id="findAll" resultType="Employee">
+   select id,code,qname,gender,password,phone,description,auth,status from EMPLOYEE where status = 1;
+  </select>
+
+    <insert id="addEmployee" parameterType="Employee">
+   INSERT INTO EMPLOYEE(code,qname,gender,password,phone,description,auth,status) VALUES(#{code},#{qname},#{gender},#{password},#{phone},#{description},#{auth},1)
+  </insert>
+
+    <update id="alertStatus" parameterType="String">
+        update EMPLOYEE set status = 0 where code = #{code}
+    </update>
+
+
+</mapper>
