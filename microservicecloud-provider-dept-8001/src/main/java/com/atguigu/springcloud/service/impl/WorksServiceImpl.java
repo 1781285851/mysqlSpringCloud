@@ -46,4 +46,9 @@ public class WorksServiceImpl implements WorksService {
         }
 
     }
+
+    @Override
+    public List<Works> findByEmpIdService(Integer empId) {
+        return worksDao.findByEmpId(empId);
+    }
 }

@@ -81,15 +81,16 @@ public class WorksController {
     }
 
     /**
-     * 查询所有
+     * 传入登录的session的name查询登陆者的所有工作信息
      * @param pageNum
      * @param pageSize
      * @return
      */
-/*    @GetMapping(value = "page_list", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "page_list", produces = MediaType.APPLICATION_JSON_VALUE)
     private @ResponseBody SoftworksResponse<PageInfo> page(
             @RequestParam(value = "pageNum", required = false) Integer pageNum,
-            @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+            @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                                                    HttpServletRequest request) {
         log.info("根据条件获取业务事项分页列表");
         if (null == pageNum) pageNum = 0;
         if (null == pageSize) pageSize = 10;
@@ -97,14 +98,19 @@ public class WorksController {
         // 2.在查询之前只需要调用，传入页码，以及每页的大小
         PageHelper.startPage(pageNum, pageSize);
         // 3.startPage后面紧跟的这个查询就是一个分页查询
-        List<Works> worksListAll = worksService.findAllervice();
+        String username = (String)request.getSession().getAttribute("username");
+        List<Works> worksListAll = null;
+        if (null != username){
+            int idByName = employeeService.findIdByName(username);
+            worksListAll = worksService.findByEmpIdService(idByName);
+        }
         // 4.使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就行了。
         // 封装了详细的分页信息,包括有我们查询出来的数据，传入连续显示的页数
         PageInfo page = new PageInfo(worksListAll, 5);
         if (0 != worksListAll.size())
             return SoftworksResponse.success(page);
         return SoftworksResponse.failure(MessageCode.COMMON_NO_DATA);
-    }*/
+    }
 
 
 }

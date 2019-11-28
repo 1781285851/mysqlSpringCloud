@@ -16,4 +16,5 @@ public interface WorksDao
     //添加信息
     void addWorks(Works works);
 
+    List<Works> findByEmpId(Integer empId);
 }

@@ -15,4 +15,6 @@ public interface WorksService {
     //添加信息
     Boolean addWorkservice(Works works);
 
+    List<Works> findByEmpIdService(Integer empId);
+
 }

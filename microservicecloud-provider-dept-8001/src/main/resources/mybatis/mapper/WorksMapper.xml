@@ -14,5 +14,9 @@
         INSERT INTO works(createDate,workContent,empId) VALUES(#{createDate},#{workContent},#{empId})
     </insert>
 
+    <select id="findByEmpId" resultType="Works" parameterType="Integer">
+        SELECT * FROM works WHERE empId = #{empId}
+    </select>
+
 
 </mapper>
