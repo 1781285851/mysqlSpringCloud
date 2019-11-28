@@ -21,4 +21,5 @@ public interface EmployeeService {
     //根据name查询用户基本信息
     public Employee findByIdService(String qname);
 
+    int findIdByName(String name);
 }

@@ -55,5 +55,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeDao.findById(qname);
     }
 
+    @Override
+    public int findIdByName(String name) {
+        return employeeDao.findIdByName(name);
+    }
+
 
 }

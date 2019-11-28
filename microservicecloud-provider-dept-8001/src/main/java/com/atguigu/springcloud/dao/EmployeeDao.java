@@ -17,4 +17,6 @@ public interface EmployeeDao {
     void alertStatus(String code);
     //根据姓名查询用户
     Employee findById(String qname);
+    //根据用户名查询用户id
+    int findIdByName(String name);
 }

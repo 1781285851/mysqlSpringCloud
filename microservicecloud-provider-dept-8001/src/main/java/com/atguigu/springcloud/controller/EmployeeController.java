@@ -24,7 +24,7 @@ public class EmployeeController {
     //测试成功
     @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     private @ResponseBody SoftworksResponse<Boolean> save(@RequestBody Employee employee){
-        log.info("保存新增用户1");
+        log.info("保存新增用户");
         Boolean result = employeeService.addEmployeeService(employee);
         if(result)
             return SoftworksResponse.success(result);

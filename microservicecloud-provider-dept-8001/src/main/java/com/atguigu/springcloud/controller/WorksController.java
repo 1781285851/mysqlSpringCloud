@@ -4,10 +4,12 @@ import com.atguigu.springcloud.entities.Employee;
 import com.atguigu.springcloud.entities.Works;
 import com.atguigu.springcloud.http.MessageCode;
 import com.atguigu.springcloud.http.SoftworksResponse;
+import com.atguigu.springcloud.service.EmployeeService;
 import com.atguigu.springcloud.service.WorksService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.log4j.Log4j;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -21,15 +23,20 @@ public class WorksController {
 
     @Autowired
     private WorksService worksService;
+    @Autowired
+    private EmployeeService employeeService;
 
     /**
-     * 查询
+     * 新增
      * @param works
      * @return
      */
     @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    private @ResponseBody SoftworksResponse<Boolean> save(@RequestBody Works works){
+    private @ResponseBody SoftworksResponse<Boolean> save(@RequestBody Works works, HttpServletRequest request){
         log.info("保存信息");
+        String username = (String) request.getSession().getAttribute("username");
+        int emp_id = employeeService.findIdByName(username);
+        works.setEmpId(emp_id);
         Boolean result = worksService.addWorkservice(works);
         if (result)
             return SoftworksResponse.success(worksService.addWorkservice(works));

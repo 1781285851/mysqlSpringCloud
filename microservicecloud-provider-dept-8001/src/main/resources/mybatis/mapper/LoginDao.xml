@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.springcloud.dao.LoginDao">
+
+    <select id="login" resultType="int" parameterType="String">
+        SELECT count(1) FROM EMPLOYEE e WHERE e.username = #{username} and e.password = #{password}
+    </select>
+
+</mapper>
