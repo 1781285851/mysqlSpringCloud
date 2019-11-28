@@ -23,4 +23,11 @@ public class LoginController {
         }
         return SoftworksResponse.failure(MessageCode. COMMON_USER_LOGIN_FAIL);
     }
+
+    @GetMapping("/clear")
+    public SoftworksResponse<Boolean> clear(HttpServletRequest request){
+        request.getSession().removeAttribute("username");
+        return SoftworksResponse.success(true);
+    }
+
 }
