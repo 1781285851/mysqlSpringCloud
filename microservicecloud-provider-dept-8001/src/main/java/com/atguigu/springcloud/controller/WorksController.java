@@ -40,7 +40,7 @@ public class WorksController {
         works.setEmpId(emp_id);
         Boolean result = worksService.addWorkservice(works);
         if (result)
-            return SoftworksResponse.success(worksService.addWorkservice(works));
+            return SoftworksResponse.success(result);
         return SoftworksResponse.failure(MessageCode.COMMON_FAILURE);
     }
 
