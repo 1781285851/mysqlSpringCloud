@@ -6,6 +6,7 @@ import com.atguigu.springcloud.service.WorksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +31,8 @@ public class WorksServiceImpl implements WorksService {
     @Override
     public Boolean addWorkservice(Works works) {
         try {
-            works.setCreateDate(new Date());
+            Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));//获取系统时间
+            works.setCreateDate(date);
             worksDao.addWorks(works);
             return true;
         } catch (Exception e) {

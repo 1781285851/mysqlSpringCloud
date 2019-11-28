@@ -21,6 +21,7 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    //测试成功
     @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     private @ResponseBody SoftworksResponse<Boolean> save(@RequestBody Employee employee){
         log.info("保存新增用户");
@@ -76,7 +77,7 @@ public class EmployeeController {
 
 
     @GetMapping(value="/qname", produces = MediaType.APPLICATION_JSON_VALUE)
-    private @ResponseBody SoftworksResponse<Employee> detailId(@RequestParam(value = "code") String qname){
+    private @ResponseBody SoftworksResponse<Employee> detailId(@RequestParam(value = "qname") String qname){
         log.info("根据姓名获取用户详细信息 name = " + qname);
         Employee employee = employeeService.findByIdService(qname);
         if (null != employee)
