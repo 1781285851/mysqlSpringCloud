@@ -31,7 +31,7 @@ public class WorksServiceImpl implements WorksService {
     @Override
     public Boolean addWorkservice(Works works) {
         try {
-            Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));//获取系统时间
+            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));//获取系统时间
             works.setCreateDate(date);
             worksDao.addWorks(works);
             return true;

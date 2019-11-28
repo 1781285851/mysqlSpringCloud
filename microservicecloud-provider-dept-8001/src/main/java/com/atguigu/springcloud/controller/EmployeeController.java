@@ -60,6 +60,7 @@ public class EmployeeController {
         return SoftworksResponse.success(page);
     }
 
+    //根据code删除（修改状态）用户信息
     @DeleteMapping(value="/", produces = MediaType.APPLICATION_JSON_VALUE)
     private @ResponseBody SoftworksResponse<Boolean> remove( @RequestParam(value = "code") String code){
         log.info("删除用户 = " + code);
@@ -67,15 +68,7 @@ public class EmployeeController {
         return SoftworksResponse.success(result);
     }
 
-    //测试成功---------------------》》》http://localhost:8001/employee/list
-    @GetMapping(value = "list")
-    private @ResponseBody SoftworksResponse<List<Employee>> page() {
-        log.info("根据条件获取用户分页列表");
-        List<Employee> emps = employeeService.findAllService();
-        return SoftworksResponse.success(emps);
-    }
-
-
+    //根据姓名查询用户信息
     @GetMapping(value="/qname", produces = MediaType.APPLICATION_JSON_VALUE)
     private @ResponseBody SoftworksResponse<Employee> detailId(@RequestParam(value = "qname") String qname){
         log.info("根据姓名获取用户详细信息 name = " + qname);
