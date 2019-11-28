@@ -13,7 +13,7 @@ public class DeptController_Consumer
 {
     private static final String REST_URL_PREFIX = "http://localhost:8001";
 
-    @Autowired
+/*    @Autowired
     private RestTemplate restTemplate;
 
     @RequestMapping(value="/consumer/dept/add")
@@ -33,7 +33,7 @@ public class DeptController_Consumer
     public List<Dept> list()
     {
         return restTemplate.getForObject(REST_URL_PREFIX+"/dept/list", List.class);
-    }
+    }*/
 }
 
 
