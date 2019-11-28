@@ -24,6 +24,6 @@
   </select>
 
     <select id="findIdByName" resultType="int" parameterType="String">
-      select e.id from EMPLOYEE  where status = 1 and qname = #{qname}
+      select e.id from EMPLOYEE e where status = 1 and qname = #{qname}
   </select>
 </mapper>

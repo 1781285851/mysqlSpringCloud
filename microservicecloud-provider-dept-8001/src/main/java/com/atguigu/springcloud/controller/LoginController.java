@@ -3,9 +3,10 @@ package com.atguigu.springcloud.controller;
 import com.atguigu.springcloud.http.MessageCode;
 import com.atguigu.springcloud.http.SoftworksResponse;
 import com.atguigu.springcloud.service.LoginService;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class LoginController {

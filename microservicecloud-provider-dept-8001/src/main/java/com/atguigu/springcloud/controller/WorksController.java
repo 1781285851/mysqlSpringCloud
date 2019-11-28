@@ -9,11 +9,11 @@ import com.atguigu.springcloud.service.WorksService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.log4j.Log4j;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -35,6 +35,7 @@ public class WorksController {
     private @ResponseBody SoftworksResponse<Boolean> save(@RequestBody Works works, HttpServletRequest request){
         log.info("保存信息");
         String username = (String) request.getSession().getAttribute("username");
+        System.out.println(username);
         int emp_id = employeeService.findIdByName(username);
         works.setEmpId(emp_id);
         Boolean result = worksService.addWorkservice(works);
