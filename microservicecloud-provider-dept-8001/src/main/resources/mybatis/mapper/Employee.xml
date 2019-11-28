@@ -19,5 +19,8 @@
         update EMPLOYEE set status = 0 where code = #{code}
     </update>
 
+    <select id="findById" resultType="Employee" parameterType="String">
+   select * from EMPLOYEE where status = 1 and qname = #{qname}
+  </select>
 
 </mapper>

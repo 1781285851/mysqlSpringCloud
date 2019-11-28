@@ -49,5 +49,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    //根据name查询id
+    @Override
+    public Employee findByIdService(String qname) {
+        return employeeDao.findById(qname);
+    }
+
 
 }

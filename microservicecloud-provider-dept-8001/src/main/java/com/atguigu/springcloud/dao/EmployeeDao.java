@@ -15,4 +15,6 @@ public interface EmployeeDao {
     void addEmployee(Employee employee);
     //根据code删除用户
     void alertStatus(String code);
+    //根据姓名查询用户
+    Employee findById(String qname);
 }

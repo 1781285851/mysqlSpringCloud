@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.atguigu.springcloud.entities.Dept;
-
 @RestController
 public class DeptController_Consumer
 {

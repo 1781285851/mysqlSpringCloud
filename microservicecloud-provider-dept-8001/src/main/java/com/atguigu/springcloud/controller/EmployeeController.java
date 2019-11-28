@@ -31,9 +31,9 @@ public class EmployeeController {
     }
 
     //测试成功---------------------》》》http://localhost:8001/employee/?code=string13
-    @GetMapping(value="/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value="/code", produces = MediaType.APPLICATION_JSON_VALUE)
     private @ResponseBody SoftworksResponse<Employee> detail(@RequestParam(value = "code") String code){
-        log.info("获取业务评价详细信息 id = " + code);
+        log.info("根据code获取用户表详细信息 code = " + code);
         Employee employee = employeeService.findByNameService(code);
         if (null != employee)
         return SoftworksResponse.success(employeeService.findByNameService(code));
@@ -45,7 +45,7 @@ public class EmployeeController {
     private @ResponseBody SoftworksResponse<PageInfo> page(
             @RequestParam(value = "pageNum", required = false) Integer pageNum,
             @RequestParam(value = "pageSize", required = false) Integer pageSize) {
-        log.info("根据条件获取业务事项分页列表");
+        log.info("根据条件获取用户分页列表");
         if (null == pageNum) pageNum = 0;
         if (null == pageSize) pageSize = 10;
         // 1.引入PageHelper分页插件
@@ -69,9 +69,20 @@ public class EmployeeController {
     //测试成功---------------------》》》http://localhost:8001/employee/list
     @GetMapping(value = "list")
     private @ResponseBody SoftworksResponse<List<Employee>> page() {
-        log.info("根据条件获取业务事项分页列表");
+        log.info("根据条件获取用户分页列表");
         List<Employee> emps = employeeService.findAllService();
         return SoftworksResponse.success(emps);
     }
+
+
+    @GetMapping(value="/qname", produces = MediaType.APPLICATION_JSON_VALUE)
+    private @ResponseBody SoftworksResponse<Employee> detailId(@RequestParam(value = "code") String qname){
+        log.info("根据姓名获取用户详细信息 name = " + qname);
+        Employee employee = employeeService.findByIdService(qname);
+        if (null != employee)
+            return SoftworksResponse.success(employeeService.findByIdService(qname));
+        return SoftworksResponse.failure(MessageCode.COMMON_USER_NOT_EXIST);
+    }
+
 
 }
