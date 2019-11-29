@@ -18,5 +18,8 @@
         SELECT * FROM works WHERE empId = #{empId}
     </select>
 
+    <select id="findByEmpIdAndDate" resultType="Works">
+        SELECT * FROM works WHERE empId = #{empId} and createDate BETWEEN #{start} AND #{end}
+    </select>
 
 </mapper>

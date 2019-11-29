@@ -45,4 +45,6 @@ pagehelper:
 
 logging:
   level:
-    com.info: debug      #给控制台打印sql语句
+    com:
+      atguigu:
+        springcloud: debug      #给控制台打印sql语句

@@ -15,6 +15,8 @@ public interface WorksDao
     List<Works> findAll();
     //添加信息
     void addWorks(Works works);
-
+    //从session获取当前登录的用户查询所有
     List<Works> findByEmpId(Integer empId);
+    //从session获取当前登录的用户和条件查询
+    List<Works>  findByEmpIdAndDate(@Param("empId")Integer empId, @Param("start") String start, @Param("end")String end);
 }

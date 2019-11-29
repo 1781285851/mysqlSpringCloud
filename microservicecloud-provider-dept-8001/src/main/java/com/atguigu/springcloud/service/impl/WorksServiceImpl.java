@@ -47,8 +47,15 @@ public class WorksServiceImpl implements WorksService {
 
     }
 
+    //从session获取当前登录的用户查询所有
     @Override
     public List<Works> findByEmpIdService(Integer empId) {
         return worksDao.findByEmpId(empId);
+    }
+
+    //从session获取当前登录的用户和条件查询
+    @Override
+    public List<Works> findByEmpIdAndDate(Integer empId, String start, String end) {
+        return worksDao.findByEmpIdAndDate(empId, start, end);
     }
 }
