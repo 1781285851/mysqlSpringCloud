@@ -21,7 +21,7 @@ public class LoginController {
         if (result){
             HttpSession session = request.getSession();
            session.setAttribute("username",username);
-            session.setMaxInactiveInterval(30);
+            session.setMaxInactiveInterval(2*60*60);
             return SoftworksResponse.success(result);
         }
         return SoftworksResponse.failure(MessageCode. COMMON_USER_LOGIN_FAIL);
