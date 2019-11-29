@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @RestController
 public class LoginController {
@@ -18,7 +19,9 @@ public class LoginController {
             @RequestParam(value = "password",required = true)String password, HttpServletRequest request){
         Boolean result = loginService.login(username,password);
         if (result){
-            request.getSession().setAttribute("username",username);
+            HttpSession session = request.getSession();
+           session.setAttribute("username",username);
+            session.setMaxInactiveInterval(30);
             return SoftworksResponse.success(result);
         }
         return SoftworksResponse.failure(MessageCode. COMMON_USER_LOGIN_FAIL);
