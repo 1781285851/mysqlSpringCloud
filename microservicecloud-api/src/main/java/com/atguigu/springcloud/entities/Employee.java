@@ -3,9 +3,11 @@ package com.atguigu.springcloud.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -31,4 +33,6 @@ public class Employee implements Serializable {
     private Integer isDelete;
     //创建时间
     private Date createDate;
+    //拥有的角色
+    private Integer[] roleIds;
 }

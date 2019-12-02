@@ -27,6 +27,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Boolean addEmployeeService(Employee employee){
         try {
             employeeDao.addEmployee(employee);
+            if(null !=employee.getRoleIds())
+                saveRoles(employee.getId(),employee.getRoleIds());
             return true;
         } catch (Exception e) {
             //1.获取异常信息，参数
@@ -60,5 +62,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeDao.findIdByName(name);
     }
 
-
+    private void saveRoles(Integer empId,Integer[] roleIds){
+        //先删除关联表中该员工的所有角色
+        employeeDao.cleanReferRoles(empId);
+        for(int i=0;i<roleIds.length;i++)
+            employeeDao.refer(empId,roleIds[i]);
+    }
 }

@@ -3,7 +3,7 @@
 <mapper namespace="com.atguigu.springcloud.dao.LoginDao">
 
     <select id="login" resultType="int" parameterType="String">
-        SELECT count(1) FROM EMPLOYEE e WHERE e.qname = #{username} and e.password = #{password}
+        SELECT count(1) FROM EMPLOYEE e WHERE isDelete = 1 and e.qname = #{username} and e.password = #{password}
     </select>
 
 </mapper>

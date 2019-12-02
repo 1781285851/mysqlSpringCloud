@@ -3,27 +3,30 @@
 <mapper namespace="com.atguigu.springcloud.dao.EmployeeDao">
 
 
-    <select id="findByName" resultType="Employee" parameterType="String">
+    <!--<select id="findByName" resultType="Employee" parameterType="String">
    select * from EMPLOYEE where status = 1 and code = #{code}
-  </select>
+  </select>-->
 
     <select id="findAll" resultType="Employee">
-   select * from EMPLOYEE where status = 1
+   select * from EMPLOYEE where isDelete = 1
   </select>
 
-    <insert id="addEmployee" parameterType="Employee">
-   INSERT INTO EMPLOYEE(code,qname,gender,password,phone,description,auth,status) VALUES(#{code},#{qname},#{gender},#{password},#{phone},#{description},#{auth},1)
+    <insert id="addEmployee" parameterType="Employee" >
+   INSERT INTO EMPLOYEE(code,qname,gender,password,phone,description,auth,isDelete)VALUES(#{code},#{qname},#{gender},#{password},#{phone},#{description},#{auth},1)
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+                SELECT LAST_INSERT_ID()
+        </selectKey>
   </insert>
 
     <update id="alertStatus" parameterType="String">
-        update EMPLOYEE set status = 0 where code = #{code}
+        update EMPLOYEE set isDelete = 0 where code = #{code}
     </update>
 
     <select id="findById" resultType="Employee" parameterType="String">
-   select * from EMPLOYEE where status = 1 and qname = #{qname}
+   select * from EMPLOYEE where isDelete = 1 and qname = #{qname}
   </select>
 
     <select id="findIdByName" resultType="int" parameterType="String">
-      select e.id from EMPLOYEE e where status = 1 and qname = #{qname}
+      select e.id from EMPLOYEE e where isDelete = 1 and qname = #{qname}
   </select>
 </mapper>
