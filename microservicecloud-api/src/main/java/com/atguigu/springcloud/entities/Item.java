@@ -17,7 +17,7 @@ public class Item implements Serializable {
     //项目名称
     private String qname;
     //项目描述
-    private String describe ;
+    private String description ;
     //创建时间
     private Date createDate;
     //更新时间
