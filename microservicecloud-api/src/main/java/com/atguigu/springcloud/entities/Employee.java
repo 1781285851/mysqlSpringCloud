@@ -27,8 +27,6 @@ public class Employee implements Serializable {
     private String phone;
     //备注
     private String description;
-    //权限 1：用户 0：管理员
-    private Integer auth;
     //状态 1：正常 0：删除
     private Integer isDelete;
     //创建时间
