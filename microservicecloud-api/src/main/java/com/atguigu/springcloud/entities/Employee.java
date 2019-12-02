@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -27,5 +28,7 @@ public class Employee implements Serializable {
     //权限 1：用户 0：管理员
     private Integer auth;
     //状态 1：正常 0：删除
-    private Integer status;
+    private Integer isDelete;
+    //创建时间
+    private Date createDate;
 }
