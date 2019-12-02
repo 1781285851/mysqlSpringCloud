@@ -12,7 +12,7 @@
   </select>
 
     <insert id="addEmployee" parameterType="Employee" >
-   INSERT INTO EMPLOYEE(code,qname,gender,password,phone,description,auth,isDelete)VALUES(#{code},#{qname},#{gender},#{password},#{phone},#{description},#{auth},1)
+   INSERT INTO EMPLOYEE(code,qname,gender,password,phone,description,isDelete)VALUES(#{code},#{qname},#{gender},#{password},#{phone},#{description},1)
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
                 SELECT LAST_INSERT_ID()
         </selectKey>
