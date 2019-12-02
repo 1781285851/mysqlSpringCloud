@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class item implements Serializable {
+public class Item implements Serializable {
     //id
     private Integer id;
     //项目编号
