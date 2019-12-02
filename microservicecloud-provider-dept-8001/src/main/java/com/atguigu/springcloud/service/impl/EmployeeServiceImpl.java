@@ -6,6 +6,7 @@ import com.atguigu.springcloud.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +28,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     //添加用户
     public Boolean addEmployeeService(Employee employee){
         try {
-            employee.setCreateDate(new Date());
+            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));//获取系统时间
+            employee.setCreateDate(date) ;
+            System.out.println(employee.getCreateDate());
             employeeDao.addEmployee(employee);
             if(null !=employee.getRoleIds())
                 saveRoles(employee.getId(),employee.getRoleIds());
