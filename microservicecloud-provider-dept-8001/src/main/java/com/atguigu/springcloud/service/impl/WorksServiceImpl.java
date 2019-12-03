@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class WorksServiceImpl implements WorksService {
 
     //根据日期查询
     @Override
-    public List<Works> findByDateService(String start, String end) {
-        return worksDao.findByDate(start, end);
+    public List<Works> findByDateService(Date start, Date end,Integer itemId) {
+        return worksDao.findByDateAndItemId(start, end,itemId);
     }
 
     //查询所有
@@ -55,7 +56,46 @@ public class WorksServiceImpl implements WorksService {
 
     //从session获取当前登录的用户和条件查询
     @Override
-    public List<Works> findByEmpIdAndDate(Integer empId, String start, String end) {
-        return worksDao.findByEmpIdAndDate(empId, start, end);
+    public List<Works> findByEmpIdAndDate(Integer empId, Date start, Date end,Integer itemId) {
+        return worksDao.findByEmpIdAndDateAndItemId(empId, start, end, itemId);
+    }
+
+    @Override
+    public List<Works> findByThisMonth(Integer itemId) throws Exception{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date start = sdf.parse(sdf.format(getmindate()));
+        Date end = sdf.parse(sdf.format(getmaxdate()));
+        return worksDao.findByDateAndItemId(start,end,itemId);
+    }
+
+    @Override
+    public List<Works> findByThisMonthAndEmpId(Integer itemId,Integer empId) throws Exception{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date start = sdf.parse(sdf.format(getmindate()));
+        Date end = sdf.parse(sdf.format(getmaxdate()));
+        return worksDao.findByEmpIdAndDateAndItemId(empId,start,end,itemId);
+    }
+
+    /**
+     * 获取本月第一天
+     * @return
+     */
+    public  Date getmindate(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+
+        return calendar.getTime();
+    }
+
+    /**
+     * 获取本月最后一天
+     * @return
+     */
+    public  Date getmaxdate(){
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.setTime(new Date());
+        calendar2.set(Calendar.DAY_OF_MONTH, calendar2.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return calendar2.getTime();
     }
 }
