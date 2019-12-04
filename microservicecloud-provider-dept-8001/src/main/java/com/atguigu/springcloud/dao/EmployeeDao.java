@@ -37,4 +37,8 @@ public interface EmployeeDao {
 
     @Select("select * from menu where id in (select distinct menu_id from role_menu where role_id in (select role_id from emp_role where emp_id = #{id}))")
     List<Menu> findMenuById(int id);
+
+
+    @Select("select * from employee where qname = #{name}")
+    Employee findByUsername(String name);
 }
