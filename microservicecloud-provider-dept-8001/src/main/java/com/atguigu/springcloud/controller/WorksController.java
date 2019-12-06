@@ -47,7 +47,7 @@ public class WorksController {
     }
 
     /**
-     * 根据日期分页查询
+     * 根据日期分页查询(ADMIN)
      * @param start
      * @param end
      * @param pageNum
@@ -90,7 +90,7 @@ public class WorksController {
     }
 
     /**
-     * 传入登录的session的name查询登陆者的所有工作信息
+     * 根据用户名查询工作信息列表
      * @param pageNum
      * @param pageSize
      * @return

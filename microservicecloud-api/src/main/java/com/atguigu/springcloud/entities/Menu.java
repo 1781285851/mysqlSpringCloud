@@ -17,4 +17,5 @@ public class Menu implements Serializable {
     private String iconCls;
     private int keepAlive;
     private int requireAuth;
+    private String code;
 }

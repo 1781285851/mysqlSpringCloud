@@ -3,17 +3,22 @@ package com.atguigu.springcloud.service.impl;
 import com.atguigu.springcloud.dao.EmployeeDao;
 import com.atguigu.springcloud.entities.Employee;
 import com.atguigu.springcloud.service.EmployeeService;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 @Service
+@Log4j
 public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeDao employeeDao;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     //根据code查询用户基本信息
     public Employee findByNameService(String code){
@@ -30,7 +35,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         try {
             Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));//获取系统时间
             employee.setCreateDate(date) ;
-            System.out.println(employee.getCreateDate());
+            if (employeeDao.findByUsername(employee.getQname())!=null){
+                log.warn("用户名已经存在！");
+                return false;
+            }
+            String password = passwordEncoder.encode(employee.getPassword());
+            employee.setPassword(password);
             employeeDao.addEmployee(employee);
             if(null !=employee.getRoleIds())
                 saveRoles(employee.getId(),employee.getRoleIds());

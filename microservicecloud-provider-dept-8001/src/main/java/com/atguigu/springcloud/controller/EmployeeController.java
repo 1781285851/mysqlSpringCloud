@@ -6,9 +6,13 @@ import com.atguigu.springcloud.http.SoftworksResponse;
 import com.atguigu.springcloud.service.EmployeeService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +25,11 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    //测试成功
+    /**
+     * 新增员工信息(ADMIN)
+     * @param employee
+     * @return
+     */
     @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     private @ResponseBody SoftworksResponse<Boolean> save(@RequestBody Employee employee){
         log.info("保存新增用户");
@@ -31,8 +39,12 @@ public class EmployeeController {
         return SoftworksResponse.failure(MessageCode.COMMON_FAILURE);
     }
 
-    //测试成功---------------------》》》http://localhost:8001/employee/?code=string13
-    @GetMapping(value="/code", produces = MediaType.APPLICATION_JSON_VALUE)
+    /**
+     * 根据code获取员工详情
+     * @param code
+     * @return
+     */
+    @GetMapping(value="/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
     private @ResponseBody SoftworksResponse<Employee> detail(@RequestParam(value = "code") String code){
         log.info("根据code获取用户表详细信息 code = " + code);
         Employee employee = employeeService.findByNameService(code);
@@ -42,6 +54,13 @@ public class EmployeeController {
     }
 
     //测试成功---------------------》》》http://localhost:8001/employee/page_list
+
+    /**
+     * 查询员工列表（ADMIN）
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @GetMapping(value = "page_list", produces = MediaType.APPLICATION_JSON_VALUE)
     private @ResponseBody SoftworksResponse<PageInfo> page(
             @RequestParam(value = "pageNum", required = false) Integer pageNum,
@@ -61,15 +80,26 @@ public class EmployeeController {
     }
 
     //根据code删除（修改状态）用户信息
-    @DeleteMapping(value="/", produces = MediaType.APPLICATION_JSON_VALUE)
+
+    /**
+     * 标记删除员工信息（ADMIN）
+     * @param code
+     * @return
+     */
+    @DeleteMapping(value="/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
     private @ResponseBody SoftworksResponse<Boolean> remove( @RequestParam(value = "code") String code){
         log.info("删除用户 = " + code);
         Boolean result = employeeService.removeByNameService(code);
         return SoftworksResponse.success(result);
     }
 
-    //根据姓名查询用户信息
-    @GetMapping(value="/qname", produces = MediaType.APPLICATION_JSON_VALUE)
+
+    /**
+     * 根据姓名查询员工详细信息
+     * @param qname
+     * @return
+     */
+    @GetMapping(value="/{qname}", produces = MediaType.APPLICATION_JSON_VALUE)
     private @ResponseBody SoftworksResponse<Employee> detailId(@RequestParam(value = "qname") String qname){
         log.info("根据姓名获取用户详细信息 name = " + qname);
         Employee employee = employeeService.findByIdService(qname);
