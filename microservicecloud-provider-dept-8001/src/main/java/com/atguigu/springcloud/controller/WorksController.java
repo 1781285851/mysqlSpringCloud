@@ -32,40 +32,44 @@ public class WorksController {
 
     /**
      * 新增
+     *
      * @param
      * @return
      */
     @RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    private @ResponseBody SoftworksResponse<Boolean> save(@RequestBody Works works){
-        log.info("保存信息"+works.toString());
-        if(null != works.getUsername()){
+    private @ResponseBody
+    SoftworksResponse<Boolean> save(@RequestBody Works works) {
+        log.info("保存信息" + works.toString());
+        if (null != works.getUsername()) {
             int emp_id = employeeService.findIdByName(works.getUsername());
             works.setEmpId(emp_id);
             Boolean result = worksService.addWorkservice(works);
             if (result)
                 return SoftworksResponse.success(result);
         }
-        return SoftworksResponse.failure(MessageCode.COMMON_FAILURE);
+        log.error("没有获取到用户名");
+        return SoftworksResponse.failure("没有获取到用户名");
     }
 
     /**
      * 根据日期分页查询(ADMIN)
+     *
      * @param start
      * @param end
      * @param pageNum
      * @param pageSize
      * @return
      */
-    @GetMapping(value="/page_list_all", produces = MediaType.APPLICATION_JSON_VALUE)
-    private @ResponseBody SoftworksResponse<PageInfo> detail(
+    @GetMapping(value = "/page_list_all", produces = MediaType.APPLICATION_JSON_VALUE)
+    private @ResponseBody
+    SoftworksResponse<PageInfo> detail(
             @RequestParam(value = "itemId", required = false) Integer itemId,
             @RequestParam(value = "start", required = false) String start,
             @RequestParam(value = "end", required = false) String end,
             @RequestParam(value = "pageNum", required = false) Integer pageNum,
-            @RequestParam(value = "pageSize", required = false) Integer pageSize)throws ParseException {
+            @RequestParam(value = "pageSize", required = false) Integer pageSize) throws ParseException {
         log.info("初始日期 start = " + start);
         log.info("结束日期 end = " + end);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             if (null == pageNum) pageNum = 0;
             if (null == pageSize) pageSize = 10;
@@ -75,12 +79,12 @@ public class WorksController {
             // 3.startPage后面紧跟的这个查询就是一个分页查询
             List<Works> worksList;
             //如果没有传入日期，默认按本月查询
-            if(null == start || null == end){
+            if (null == start || null == end) {
                 worksList = worksService.findByThisMonth(itemId);
-            }else {
+            } else {
                 Date startDate = new Date(start);
                 Date endDate = new Date(end);
-                worksList = worksService.findByDateService(startDate, endDate,itemId);
+                worksList = worksService.findByDateService(startDate, endDate, itemId);
                 log.info(worksList.toString());
             }
             // 4.使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就行了。
@@ -97,13 +101,15 @@ public class WorksController {
 
     /**
      * 根据用户名查询工作信息列表
+     *
      * @param pageNum
      * @param pageSize
      * @return
      */
     @GetMapping(value = "page_list", produces = MediaType.APPLICATION_JSON_VALUE)
-    private @ResponseBody SoftworksResponse<PageInfo> page(
-            @RequestParam(value = "username") String  username,
+    private @ResponseBody
+    SoftworksResponse<PageInfo> page(
+            @RequestParam(value = "username") String username,
             @RequestParam(value = "itemId", required = false) Integer itemId,
             @RequestParam(value = "start", required = false) String start,
             @RequestParam(value = "end", required = false) String end,
@@ -116,26 +122,26 @@ public class WorksController {
             if (null == pageSize) pageSize = 10;
             // 1.引入PageHelper分页插件
             // 2.在查询之前只需要调用，传入页码，以及每页的大小
-            log.error(pageNum+" "+pageSize);
+            log.error(pageNum + " " + pageSize);
             // 3.startPage后面紧跟的这个查询就是一个分页查询
             List<Works> worksListAll = null;
-            if (null != username){
+            if (null != username) {
                 int idByName = employeeService.findIdByName(username);
                 //分页下面要紧跟需要分页的语句
                 PageHelper.startPage(pageNum, pageSize);
-                if(null == start || null == end){
-                    worksListAll = worksService.findByThisMonthAndEmpId(itemId,idByName);
-                }else{
+                if (null == start || null == end) {
+                    worksListAll = worksService.findByThisMonthAndEmpId(itemId, idByName);
+                } else {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     Date startDate = sdf.parse(start);
 
                     Date endDate = sdf.parse(end);
                     worksListAll = worksService.findByEmpIdAndDate(idByName, startDate, endDate, itemId);
                 }
-            }else {
+            } else {
                 return SoftworksResponse.failure(MessageCode.COMMON_PARAMETER_ERROR);
             }
-            if (0 != worksListAll.size()){
+            if (0 != worksListAll.size()) {
                 // 4.使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就行了。
                 // 封装了详细的分页信息,包括有我们查询出来的数据，传入连续显示的页数
                 PageInfo page = new PageInfo(worksListAll, 5);
@@ -148,4 +154,14 @@ public class WorksController {
         }
     }
 
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    private @ResponseBody
+    SoftworksResponse<Works> detail(@RequestParam(value = "id") Integer id) {
+        log.info("根据id获取工作详细信息 id = " + id);
+        Works works = worksService.findById(id);
+        if (null != works)
+            return SoftworksResponse.success(works);
+        return SoftworksResponse.failure(MessageCode.COMMON_USER_NOT_EXIST);
+    }
 }
+

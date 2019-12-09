@@ -23,5 +23,6 @@ public interface WorksService {
     List<Works> findByThisMonth (Integer itemId)throws Exception;
     //根据本月查询
     List<Works> findByThisMonthAndEmpId(Integer itemId,Integer empId)throws Exception;
-
+    //根据id查询工作详情
+    Works findById(Integer id);
 }

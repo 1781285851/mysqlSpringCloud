@@ -36,18 +36,14 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
-    public SoftworksResponse<Boolean> clear(@RequestParam(value = "username",required = true)String username){
-        log.info("退出");
-        return SoftworksResponse.success(true);
-    }
-
-    @GetMapping("/")
-    public SoftworksResponse<String> index(){
-        return SoftworksResponse.success("这是首页");
-    }
-
-    @GetMapping("/logout2")
-    public SoftworksResponse<String> logout(){
-        return SoftworksResponse.success("退出成功");
+    public SoftworksResponse<Boolean> clear(@RequestParam(value = "username")String username,HttpServletRequest request){
+        try {
+            request.getSession().removeAttribute(username);
+            log.info("退出");
+            return SoftworksResponse.success(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return SoftworksResponse.failure(e.getMessage());
+        }
     }
 }

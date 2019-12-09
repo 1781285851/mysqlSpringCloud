@@ -21,4 +21,6 @@ public class Works implements Serializable {
     private Integer empId;
     //项目id
     private Integer itemId;
+    //用户名
+    private String username;
 }

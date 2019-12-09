@@ -20,9 +20,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     private PasswordEncoder passwordEncoder;
 
 
-    //根据code查询用户基本信息
-    public Employee findByNameService(String code){
-        return employeeDao.findByName(code);
+    //根据id查询用户基本信息
+    public Employee findById(Integer id){
+        return employeeDao.findById(id);
     }
 
     //查询所有用户
@@ -46,20 +46,16 @@ public class EmployeeServiceImpl implements EmployeeService {
                 saveRoles(employee.getId(),employee.getRoleIds());
             return true;
         } catch (Exception e) {
-            //1.获取异常信息，参数
-            System.out.println(e.getMessage());
-            //2.获取异常类名和异常信息
-            System.out.println(e.toString());
-            //3.获取异常类名和异常信息，及出现异常的位置
+           log.error(e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
 
-    //根据code删除用户
-    public Boolean removeByNameService(String code){
+    //根据id删除用户
+    public Boolean deleteById(Integer id){
         try {
-            employeeDao.alertStatus(code);
+            employeeDao.deleteById(id);
             return true;
         } catch (Exception e) {
             return false;
@@ -69,7 +65,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     //根据name查询id
     @Override
     public Employee findByIdService(String qname) {
-        return employeeDao.findById(qname);
+        return employeeDao.findByName(qname);
     }
 
     @Override

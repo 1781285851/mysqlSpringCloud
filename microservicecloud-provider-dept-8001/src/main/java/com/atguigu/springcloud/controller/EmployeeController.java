@@ -40,20 +40,20 @@ public class EmployeeController {
     }
 
     /**
-     * 根据code获取员工详情
-     * @param code
+     * 根据id获取员工详情
+     * @param id
      * @return
      */
-    @GetMapping(value="/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
-    private @ResponseBody SoftworksResponse<Employee> detail(@RequestParam(value = "code") String code){
-        log.info("根据code获取用户表详细信息 code = " + code);
-        Employee employee = employeeService.findByNameService(code);
+    @GetMapping(value="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    private @ResponseBody SoftworksResponse<Employee> detail(@RequestParam(value = "id") Integer id){
+        log.info("根据id获取用户表详细信息 id = " + id);
+        Employee employee = employeeService.findById(id);
         if (null != employee)
-        return SoftworksResponse.success(employeeService.findByNameService(code));
+        return SoftworksResponse.success(employee);
         return SoftworksResponse.failure(MessageCode.COMMON_USER_NOT_EXIST);
     }
 
-    //测试成功---------------------》》》http://localhost:8001/employee/page_list
+
 
     /**
      * 查询员工列表（ADMIN）
@@ -79,17 +79,16 @@ public class EmployeeController {
         return SoftworksResponse.success(page);
     }
 
-    //根据code删除（修改状态）用户信息
 
     /**
      * 标记删除员工信息（ADMIN）
-     * @param code
+     * @param id
      * @return
      */
-    @DeleteMapping(value="/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
-    private @ResponseBody SoftworksResponse<Boolean> remove( @RequestParam(value = "code") String code){
-        log.info("删除用户 = " + code);
-        Boolean result = employeeService.removeByNameService(code);
+    @DeleteMapping(value="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    private @ResponseBody SoftworksResponse<Boolean> remove( @RequestParam(value = "id") Integer id){
+        log.info("删除用户 = " + id);
+        Boolean result = employeeService.deleteById(id);
         return SoftworksResponse.success(result);
     }
 

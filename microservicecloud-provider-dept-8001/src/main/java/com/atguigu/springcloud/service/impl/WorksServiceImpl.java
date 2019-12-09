@@ -77,6 +77,16 @@ public class WorksServiceImpl implements WorksService {
     }
 
     /**
+     * 根据id查询工作详情
+     * @param id
+     * @return
+     */
+    @Override
+    public Works findById(Integer id) {
+        return worksDao.findById(id);
+    }
+
+    /**
      * 获取本月第一天
      * @return
      */

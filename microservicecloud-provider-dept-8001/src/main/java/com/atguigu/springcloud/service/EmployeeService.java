@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    //根据code查询用户基本信息
-    public Employee findByNameService(String code);
+    //根据id查询用户基本信息
+    public Employee findById(Integer id);
 
     //查询所有用户
     public List<Employee> findAllService();
@@ -15,8 +15,8 @@ public interface EmployeeService {
     //添加用户
     public Boolean addEmployeeService(Employee employee);
 
-    //根据code删除用户
-    public Boolean removeByNameService(String code);
+    //根据id删除用户
+    public Boolean deleteById(Integer id);
 
     //根据name查询用户基本信息
     public Employee findByIdService(String qname);
