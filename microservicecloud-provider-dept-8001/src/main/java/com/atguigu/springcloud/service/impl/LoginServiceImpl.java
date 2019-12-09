@@ -6,6 +6,7 @@ import com.atguigu.springcloud.entities.Employee;
 import com.atguigu.springcloud.entities.Menu;
 import com.atguigu.springcloud.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -20,12 +21,17 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private EmployeeDao employeeDao;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @Override
     public Boolean login(String username, String password) {
-        int i = loginDao.login(username, password);
-        if (i!=1)
-            return false;
+        Employee employee = employeeDao.findByUsername(username);
+        //密码是否匹配
+        boolean matches = passwordEncoder.matches(password, employee.getPassword());
+        if (matches)
+            return true;
         return true;
     }
 

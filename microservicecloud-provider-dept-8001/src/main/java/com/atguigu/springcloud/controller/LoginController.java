@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,6 +23,7 @@ public class LoginController {
     public SoftworksResponse<Map<String,Object>> login(
             @RequestParam(value = "username",required = true)String username,
             @RequestParam(value = "password",required = true)String password, HttpServletRequest request){
+        log.info("登陆验证...");
         Boolean result = loginService.login(username,password);
         if (result){
             HttpSession session = request.getSession();
