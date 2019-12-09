@@ -8,7 +8,7 @@
         <if test="itemId!=null and itemId!= ''">
             and itemId = #{itemId}
         </if>
-
+        order by id desc
     </select>
 
     <select id="findAll" resultType="Works">

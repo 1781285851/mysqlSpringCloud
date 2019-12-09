@@ -9,5 +9,6 @@ import java.util.Map;
 public interface LoginService {
     Boolean login(String username, String password);
 
-    Map<Employee,List<Menu>> getMenusByUsername(String username);
+    Map<String,Object> getMenusByUsername(String username);
+
 }

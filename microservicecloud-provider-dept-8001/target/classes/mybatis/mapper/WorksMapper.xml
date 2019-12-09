@@ -2,8 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.atguigu.springcloud.dao.WorksDao">
 
-    <select id="findByDate" resultType="Works" parameterType="String">
+    <select id="findByDateAndItemId" resultType="Works" >
         SELECT * FROM works WHERE createDate BETWEEN #{start} AND #{end}
+
+        <if test="itemId!=null and itemId!= ''">
+            and itemId = #{itemId}
+        </if>
+        order by id desc
     </select>
 
     <select id="findAll" resultType="Works">
@@ -11,8 +16,18 @@
     </select>
 
     <insert id="addWorks" parameterType="Works">
-        INSERT INTO works(createDate,workContent,empId) VALUES(#{createDate},#{workContent},#{empId})
+        INSERT INTO works(createDate,workContent,empId,itemId) VALUES(#{createDate},#{workContent},#{empId},#{itemId})
     </insert>
 
+    <select id="findByEmpId" resultType="Works" parameterType="Integer">
+        SELECT * FROM works WHERE empId = #{empId}
+    </select>
+
+    <select id="findByEmpIdAndDateAndItemId" resultType="Works">
+        SELECT * FROM works WHERE empId = #{empId} and createDate BETWEEN #{start} AND #{end}
+        <if test="itemId!=null and itemId!= ''">
+            and itemId = #{itemId}
+        </if>
+    </select>
 
 </mapper>

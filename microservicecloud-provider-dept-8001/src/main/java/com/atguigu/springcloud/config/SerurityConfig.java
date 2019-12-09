@@ -24,13 +24,13 @@ public class SerurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        /*http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/employee/","/employee/page_list","/works/page_list_all").hasRole("ADMIN");
         //开启自动配置的登陆功能
         http.formLogin().and().sessionManagement().invalidSessionUrl("/");
         //开启自动配置的注销功能
-        http.logout().logoutUrl("/logout2").logoutSuccessUrl("/").deleteCookies("JSESSIONID");
+        http.logout().logoutUrl("/logout2").logoutSuccessUrl("/").deleteCookies("JSESSIONID");*/
         http.csrf().disable();
     }
     //定义认证规则

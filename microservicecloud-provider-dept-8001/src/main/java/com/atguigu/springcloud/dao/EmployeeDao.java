@@ -28,7 +28,7 @@ public interface EmployeeDao {
 
     @Select("select role_id from emp_role where emp_id =#{empId}")
     int[] getRoleIdListById(Integer empId);
-    
+
     @Delete("delete from emp_role where emp_id =#{empId}")
     void cleanReferRoles(Integer empId);
 

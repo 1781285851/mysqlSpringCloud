@@ -29,12 +29,14 @@ public class LoginServiceImpl implements LoginService {
         return true;
     }
 
-    public Map<Employee,List<Menu>> getMenusByUsername(String username){
+    public Map<String,Object> getMenusByUsername(String username){
         Map map = new HashMap();
         int id = employeeDao.findIdByName(username);
         Employee employee = employeeDao.findByUsername(username);
         List<Menu> menus = employeeDao.findMenuById(id);
-        map.put(employee,menus);
+        map.put("Employee",employee);
+        map.put("Menus",menus);
         return map;
     }
+
 }

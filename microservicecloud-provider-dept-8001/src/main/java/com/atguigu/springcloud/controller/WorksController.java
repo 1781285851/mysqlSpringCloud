@@ -8,12 +8,15 @@ import com.atguigu.springcloud.service.EmployeeService;
 import com.atguigu.springcloud.service.WorksService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.corba.se.spi.orbutil.threadpool.Work;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -29,15 +32,14 @@ public class WorksController {
 
     /**
      * 新增
-     * @param works
+     * @param
      * @return
      */
-    @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    private @ResponseBody SoftworksResponse<Boolean> save(@RequestBody Works works, HttpServletRequest request){
-        log.info("保存信息");
-        String username = (String) request.getSession().getAttribute("username");
-        if(null != username){
-            int emp_id = employeeService.findIdByName(username);
+    @RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    private @ResponseBody SoftworksResponse<Boolean> save(@RequestBody Works works){
+        log.info("保存信息"+works.toString());
+        if(null != works.getUsername()){
+            int emp_id = employeeService.findIdByName(works.getUsername());
             works.setEmpId(emp_id);
             Boolean result = worksService.addWorkservice(works);
             if (result)
@@ -57,12 +59,13 @@ public class WorksController {
     @GetMapping(value="/page_list_all", produces = MediaType.APPLICATION_JSON_VALUE)
     private @ResponseBody SoftworksResponse<PageInfo> detail(
             @RequestParam(value = "itemId", required = false) Integer itemId,
-            @RequestParam(value = "start", required = false) Date start,
-            @RequestParam(value = "end", required = false) Date end,
+            @RequestParam(value = "start", required = false) String start,
+            @RequestParam(value = "end", required = false) String end,
             @RequestParam(value = "pageNum", required = false) Integer pageNum,
-            @RequestParam(value = "pageSize", required = false) Integer pageSize){
+            @RequestParam(value = "pageSize", required = false) Integer pageSize)throws ParseException {
         log.info("初始日期 start = " + start);
         log.info("结束日期 end = " + end);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             if (null == pageNum) pageNum = 0;
             if (null == pageSize) pageSize = 10;
@@ -75,7 +78,10 @@ public class WorksController {
             if(null == start || null == end){
                 worksList = worksService.findByThisMonth(itemId);
             }else {
-                 worksList = worksService.findByDateService(start, end,itemId);
+                Date startDate = new Date(start);
+                Date endDate = new Date(end);
+                worksList = worksService.findByDateService(startDate, endDate,itemId);
+                log.info(worksList.toString());
             }
             // 4.使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就行了。
             // 封装了详细的分页信息,包括有我们查询出来的数据，传入连续显示的页数
@@ -99,8 +105,8 @@ public class WorksController {
     private @ResponseBody SoftworksResponse<PageInfo> page(
             @RequestParam(value = "username") String  username,
             @RequestParam(value = "itemId", required = false) Integer itemId,
-            @RequestParam(value = "start", required = false) Date start,
-            @RequestParam(value = "end", required = false) Date end,
+            @RequestParam(value = "start", required = false) String start,
+            @RequestParam(value = "end", required = false) String end,
             @RequestParam(value = "pageNum", required = false) Integer pageNum,
             @RequestParam(value = "pageSize", required = false) Integer pageSize,
             HttpServletRequest request) {
@@ -120,7 +126,11 @@ public class WorksController {
                 if(null == start || null == end){
                     worksListAll = worksService.findByThisMonthAndEmpId(itemId,idByName);
                 }else{
-                    worksListAll = worksService.findByEmpIdAndDate(idByName, start, end, itemId);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    Date startDate = sdf.parse(start);
+
+                    Date endDate = sdf.parse(end);
+                    worksListAll = worksService.findByEmpIdAndDate(idByName, startDate, endDate, itemId);
                 }
             }else {
                 return SoftworksResponse.failure(MessageCode.COMMON_PARAMETER_ERROR);
