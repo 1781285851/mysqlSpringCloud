@@ -40,15 +40,16 @@ public class WorksController {
     private @ResponseBody
     SoftworksResponse<Boolean> save(@RequestBody Works works) {
         log.info("保存信息" + works.toString());
-        if (null != works.getUsername()) {
-            int emp_id = employeeService.findIdByName(works.getUsername());
-            works.setEmpId(emp_id);
-            Boolean result = worksService.addWorkservice(works);
-            if (result)
-                return SoftworksResponse.success(result);
+        if (works.getUsername() == null) {
+            log.error("没有获取到用户名");
+            return SoftworksResponse.failure("没有获取到用户名");
         }
-        log.error("没有获取到用户名");
-        return SoftworksResponse.failure("没有获取到用户名");
+        int emp_id = employeeService.findIdByName(works.getUsername());
+        works.setEmpId(emp_id);
+        Boolean result = worksService.addWorkservice(works);
+        if (result)
+            return SoftworksResponse.success(result);
+        return SoftworksResponse.failure(MessageCode.COMMON_FAILURE);
     }
 
     /**

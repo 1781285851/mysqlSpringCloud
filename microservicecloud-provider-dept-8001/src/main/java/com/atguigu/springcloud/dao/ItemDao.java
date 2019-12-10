@@ -1,11 +1,9 @@
 package com.atguigu.springcloud.dao;
 
 import com.atguigu.springcloud.entities.Item;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -20,5 +18,7 @@ public interface ItemDao {
     //修改项目信息的状态
     @Update("update item set isDelete = 0 where code = #{code}")
     void alertIsDelete(String code);
-
+    //更新项目更新时间
+    @Update("update item set updateDate = #{updateDate}  where id = #{itemId}")
+    void updateTime(@Param("updateDate") Date updateDate , @Param("itemId")Integer itemId);
 }

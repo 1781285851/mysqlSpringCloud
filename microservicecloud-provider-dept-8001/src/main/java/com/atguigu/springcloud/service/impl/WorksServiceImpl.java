@@ -1,5 +1,6 @@
 package com.atguigu.springcloud.service.impl;
 
+import com.atguigu.springcloud.dao.ItemDao;
 import com.atguigu.springcloud.dao.WorksDao;
 import com.atguigu.springcloud.entities.Works;
 import com.atguigu.springcloud.service.WorksService;
@@ -15,6 +16,8 @@ import java.util.List;
 public class WorksServiceImpl implements WorksService {
     @Autowired
     private WorksDao worksDao;
+    @Autowired
+    private ItemDao itemDao;
 
     //根据日期查询
     @Override
@@ -35,6 +38,8 @@ public class WorksServiceImpl implements WorksService {
             Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));//获取系统时间
             works.setCreateDate(date);
             worksDao.addWorks(works);
+            //更新项目修改日期
+            itemDao.updateTime(new Date(), works.getItemId());
             return true;
         } catch (Exception e) {
             //1.获取异常信息，参数
