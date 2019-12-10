@@ -28,6 +28,7 @@
         <if test="itemId!=null and itemId!= ''">
             and itemId = #{itemId}
         </if>
+        order by id desc
     </select>
 
 </mapper>
