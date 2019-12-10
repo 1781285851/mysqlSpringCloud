@@ -21,17 +21,19 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private EmployeeDao employeeDao;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
 
     @Override
     public Boolean login(String username, String password) {
         Employee employee = employeeDao.findByUsername(username);
-        //密码是否匹配
-        boolean matches = passwordEncoder.matches(password, employee.getPassword());
-        if (matches)
-            return true;
+        int i = loginDao.login(username, password);
+        if (i!=1)
+            return false;
+//        //密码是否匹配
+//        boolean matches = passwordEncoder.matches(password, employee.getPassword());
+//        if (matches)
         return true;
     }
 

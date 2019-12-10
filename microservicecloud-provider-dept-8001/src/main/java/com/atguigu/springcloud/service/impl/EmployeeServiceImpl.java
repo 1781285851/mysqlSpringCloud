@@ -16,8 +16,8 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeDao employeeDao;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
 
     //根据id查询用户基本信息
@@ -39,8 +39,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                 log.warn("用户名已经存在！");
                 return false;
             }
-            String password = passwordEncoder.encode(employee.getPassword());
-            employee.setPassword(password);
+//            String password = passwordEncoder.encode(employee.getPassword());
+//            employee.setPassword(password);
             employeeDao.addEmployee(employee);
             if(null !=employee.getRoleIds())
                 saveRoles(employee.getId(),employee.getRoleIds());
