@@ -8,7 +8,7 @@
   </select>-->
 
     <select id="findAll" resultType="Employee">
-   select * from EMPLOYEE where isDelete = 1
+   select * from EMPLOYEE where isDelete = 1 and id != 1
   </select>
 
     <insert id="addEmployee" parameterType="Employee" >
