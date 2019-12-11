@@ -25,4 +25,6 @@ public interface WorksDao
     //根据id查询详情
     @Select("select * from works where id = #{id}")
     Works findById(Integer id);
+
+    Boolean deletework(Works works);
 }

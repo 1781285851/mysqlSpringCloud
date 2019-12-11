@@ -41,4 +41,8 @@
     <select id="findNameById" resultType="String" parameterType="integer">
         select qname from employee where id = #{empId}
     </select>
+
+    <delete id="deletework" parameterType="Works">
+        delete from works where id=#{id}
+    </delete>
 </mapper>

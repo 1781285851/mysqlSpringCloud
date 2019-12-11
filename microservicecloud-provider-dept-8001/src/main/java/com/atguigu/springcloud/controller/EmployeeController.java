@@ -107,8 +107,7 @@ public class EmployeeController {
         return SoftworksResponse.failure(MessageCode.COMMON_USER_NOT_EXIST);
     }
 
-
-    @GetMapping(value = "list", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
     private @ResponseBody SoftworksResponse<List<Employee>> list() {
         log.info("查询员工列表");
         List<Employee> emps = employeeService.findAllService();

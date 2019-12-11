@@ -1,7 +1,5 @@
 server:
   port: 8001
-  session:
-    timeout: 5
 mybatis:
   config-location: classpath:mybatis/mybatis.cfg.xml  #mybatis所在路径
   type-aliases-package: com.atguigu.springcloud.entities #entity别名类

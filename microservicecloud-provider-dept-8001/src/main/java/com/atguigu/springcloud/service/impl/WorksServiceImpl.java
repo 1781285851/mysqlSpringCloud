@@ -91,6 +91,11 @@ public class WorksServiceImpl implements WorksService {
         return worksDao.findById(id);
     }
 
+    @Override
+    public Boolean deletework(Works works) {
+        return worksDao.deletework(works);
+    }
+
     /**
      * 获取本月第一天
      * @return

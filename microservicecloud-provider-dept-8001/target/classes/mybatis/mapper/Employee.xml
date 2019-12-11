@@ -8,7 +8,7 @@
   </select>-->
 
     <select id="findAll" resultType="Employee">
-   select * from EMPLOYEE where isDelete = 1
+   select * from EMPLOYEE where isDelete = 1 and id != 1
   </select>
 
     <insert id="addEmployee" parameterType="Employee" >
@@ -18,15 +18,17 @@
         </selectKey>
   </insert>
 
-    <update id="alertStatus" parameterType="String">
-        update EMPLOYEE set isDelete = 0 where code = #{code}
+    <update id="deleteById" parameterType="integer">
+        update EMPLOYEE set isDelete = 0 where id = #{id}
     </update>
 
-    <select id="findById" resultType="Employee" parameterType="String">
+    <select id="findByName" resultType="Employee" parameterType="String">
    select * from EMPLOYEE where isDelete = 1 and qname = #{qname}
   </select>
 
     <select id="findIdByName" resultType="int" parameterType="String">
       select e.id from EMPLOYEE e where isDelete = 1 and qname = #{qname}
   </select>
+
+
 </mapper>

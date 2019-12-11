@@ -53,6 +53,33 @@ public class WorksController {
     }
 
     /**
+     * 删除
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    private @ResponseBody
+    SoftworksResponse<Boolean> deleteworks(@RequestBody Works works) throws ParseException {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        if (works.getCreateDate() != null) {
+            Date date=sdf.parse(sdf.format(works.getCreateDate()));
+            Date today=sdf.parse(sdf.format(new Date()));
+            if(date.equals(today)){
+                log.info("删除工作记录" + works.toString());
+                Boolean result = worksService.deletework(works);
+                if (result)
+                    return SoftworksResponse.success(result);
+            }
+            }else{
+            log.info("撤销失败日期不允许");
+        }
+
+        return SoftworksResponse.failure(MessageCode.COMMON_FAILURE);
+    }
+
+
+    /**
      * 根据日期分页查询(ADMIN)
      *
      * @param start
@@ -110,13 +137,14 @@ public class WorksController {
     @GetMapping(value = "page_list", produces = MediaType.APPLICATION_JSON_VALUE)
     private @ResponseBody
     SoftworksResponse<PageInfo> page(
-            @RequestParam(value = "username") String username,
+            @RequestParam(value = "username", required = false) String username,
             @RequestParam(value = "itemId", required = false) Integer itemId,
             @RequestParam(value = "start", required = false) String start,
             @RequestParam(value = "end", required = false) String end,
             @RequestParam(value = "pageNum", required = false) Integer pageNum,
             @RequestParam(value = "pageSize", required = false) Integer pageSize,
             HttpServletRequest request) {
+        log.info(itemId + " " + username + " " + pageNum + " " + pageSize);
         log.info("根据条件获取业务事项分页列表");
         try {
             if (null == pageNum) pageNum = 0;
@@ -130,13 +158,11 @@ public class WorksController {
                 int idByName = employeeService.findIdByName(username);
                 //分页下面要紧跟需要分页的语句
                 PageHelper.startPage(pageNum, pageSize);
-                if (null == start || null == end) {
+                if (null == start || null == end || "".equals(start) || "".equals(end)) {
                     worksListAll = worksService.findByThisMonthAndEmpId(itemId, idByName);
                 } else {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    Date startDate = sdf.parse(start);
-
-                    Date endDate = sdf.parse(end);
+                    Date startDate = new Date(start);
+                    Date endDate = new Date(end);
                     worksListAll = worksService.findByEmpIdAndDate(idByName, startDate, endDate, itemId);
                 }
             } else {

@@ -25,4 +25,6 @@ public interface WorksService {
     List<Works> findByThisMonthAndEmpId(Integer itemId,Integer empId)throws Exception;
     //根据id查询工作详情
     Works findById(Integer id);
+
+    Boolean deletework(Works works);
 }
