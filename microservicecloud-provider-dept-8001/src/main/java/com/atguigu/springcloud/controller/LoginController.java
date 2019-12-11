@@ -35,11 +35,23 @@ public class LoginController {
         return SoftworksResponse.failure(MessageCode. COMMON_USER_LOGIN_FAIL);
     }
 
-    @GetMapping("/logout")
-    public SoftworksResponse<Boolean> clear(@RequestParam(value = "username")String username,HttpServletRequest request){
+//    @GetMapping("/logout")
+//    public SoftworksResponse<Boolean> clear(@RequestParam(value = "username")String username,HttpServletRequest request){
+//        try {
+//            request.getSession().removeAttribute(username);
+//            log.info("退出");
+//            return SoftworksResponse.success(true);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return SoftworksResponse.failure(e.getMessage());
+//        }
+//    }
+
+    @GetMapping("/logout2")
+    public SoftworksResponse<Boolean> clear2(@RequestParam(value = "username")String username,HttpServletRequest request){
         try {
             request.getSession().removeAttribute(username);
-            log.info("退出");
+            log.info("退出....");
             return SoftworksResponse.success(true);
         } catch (Exception e) {
             e.printStackTrace();

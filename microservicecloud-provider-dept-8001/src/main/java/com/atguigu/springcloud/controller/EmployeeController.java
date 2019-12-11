@@ -108,4 +108,10 @@ public class EmployeeController {
     }
 
 
+    @GetMapping(value = "list", produces = MediaType.APPLICATION_JSON_VALUE)
+    private @ResponseBody SoftworksResponse<List<Employee>> list() {
+        log.info("查询员工列表");
+        List<Employee> emps = employeeService.findAllService();
+        return SoftworksResponse.success(emps);
+    }
 }

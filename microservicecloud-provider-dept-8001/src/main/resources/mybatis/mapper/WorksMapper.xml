@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.atguigu.springcloud.dao.WorksDao">
-
-    <select id="findByDateAndItemId" resultType="Works" >
+    <resultMap id="worksMap" type="works">
+        <id column="id" property="id"></id>
+        <result column="createDate" property="createDate"/>
+        <result column="workContent" property="workContent"/>
+        <result column="itemId" property="itemId"/>
+        <result column="empId" property="empId"/>
+        <association property="username" column="empId" select="findNameById"/>
+    </resultMap>
+    <select id="findByDateAndItemId"  resultMap="worksMap">
         SELECT * FROM works WHERE createDate BETWEEN #{start} AND #{end}
 
         <if test="itemId!=null and itemId!= ''">
@@ -31,4 +38,7 @@
         order by id desc
     </select>
 
+    <select id="findNameById" resultType="String" parameterType="integer">
+        select qname from employee where id = #{empId}
+    </select>
 </mapper>

@@ -29,4 +29,6 @@
     <select id="findIdByName" resultType="int" parameterType="String">
       select e.id from EMPLOYEE e where isDelete = 1 and qname = #{qname}
   </select>
+
+
 </mapper>
